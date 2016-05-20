@@ -5,6 +5,8 @@
 # include <limits.h>
 # include <fcntl.h>
 
+typedef struct s_state_list t_state_list;
+typedef struct s_state t_state;
 typedef struct s_env t_env;
 
 char *get_next_line(int fd);
@@ -16,6 +18,17 @@ struct s_env
 {
 	int **puzzle;
 	int size;
+};
+
+struct s_state_list
+{
+	t_state *state;
+	t_state_list *next;
+};
+
+struct s_state
+{
+	int **puzzle;
 };
 
 #endif
