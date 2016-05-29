@@ -4,7 +4,7 @@ static void alloc_puzzle(t_env *env)
 {
 	int i;
 
-	if (!(env->puzzle = malloc(sizeof(*env->puzzle) * env->size)))
+	if (!(env->start->puzzle = malloc(sizeof(*env->start->puzzle) * env->size)))
 	{
 		ft_putendl_fd("npuzzle: failed to malloc puzzle", 2);
 		exit(EXIT_FAILURE);
@@ -12,7 +12,7 @@ static void alloc_puzzle(t_env *env)
 	i = 0;
 	while (i < env->size)
 	{
-		if (!(env->puzzle[i] = malloc(sizeof(**env->puzzle) * env->size)))
+		if (!(env->start->puzzle[i] = malloc(sizeof(**env->start->puzzle) * env->size)))
 		{
 			ft_putendl_fd("npuzzle: failed to malloc puzzle", 2);
 			exit(EXIT_FAILURE);
@@ -27,14 +27,14 @@ static int case_value_exists(t_env *env, int stmp, int i)
 	int y;
 	int x;
 
-	value = env->puzzle[stmp][i];
+	value = env->start->puzzle[stmp][i];
 	y = 0;
 	while (y < stmp)
 	{
 		x = 0;
 		while (x < env->size)
 		{
-			if (env->puzzle[y][x] == value)
+			if (env->start->puzzle[y][x] == value)
 				return (1);
 			x++;
 		}
@@ -43,7 +43,7 @@ static int case_value_exists(t_env *env, int stmp, int i)
 	x = 0;
 	while (x < i)
 	{
-		if (env->puzzle[stmp][x] == value)
+		if (env->start->puzzle[stmp][x] == value)
 			return (1);
 		x++;
 	}
@@ -75,8 +75,8 @@ static void fill_line(t_env *env, char *line, int stmp)
 			ft_putendl_fd("npuzzle: invalid case value", 2);
 			exit(EXIT_FAILURE);
 		}
-		env->puzzle[stmp][i] = ft_atoi(splitted[i]);
-		if (env->puzzle[stmp][i] < 0 || env->puzzle[stmp][i] > env->size * env->size - 1)
+		env->start->puzzle[stmp][i] = ft_atoi(splitted[i]);
+		if (env->start->puzzle[stmp][i] < 0 || env->start->puzzle[stmp][i] > env->size * env->size - 1)
 		{
 			ft_putendl_fd("npuzzle: invalid case value", 2);
 			exit(EXIT_FAILURE);
@@ -116,11 +116,13 @@ void parse_file(t_env *env, char *file)
 	{
 		if ((tmp = ft_strchr(line, '#')))
 			tmp[0] = '\0';
+		tmp = line;
 		if (!(line = ft_strtrim(line)))
 		{
 			ft_putendl_fd("npuzzle: can't trim line", 2);
 			exit(EXIT_FAILURE);
 		}
+		free(tmp);
 		if (!line[0])
 			continue;
 		if (!size)

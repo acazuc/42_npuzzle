@@ -1,6 +1,6 @@
 #include "npuzzle.h"
 
-void dump_puzzle(t_env *env, int **puzzle)
+void dump_state(t_env *env, t_state *state)
 {
 	int x;
 	int y;
@@ -11,7 +11,7 @@ void dump_puzzle(t_env *env, int **puzzle)
 		x = 0;
 		while (x < env->size)
 		{
-			ft_putnbr(puzzle[y][x]);
+			ft_putnbr(state->puzzle[y][x]);
 			if (x != env->size - 1)
 				ft_putchar(' ');
 			x++;
