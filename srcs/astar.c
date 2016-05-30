@@ -95,7 +95,7 @@ void astar(t_env *env)
 	if (success)
 	{
 		ft_putendl("solution: ");
-		print_solution(env, best_state);
+		//print_solution(env, best_state);
 		ft_putstr("time complexity: ");
 		ft_putnbr(complexity_time);
 		ft_putchar('\n');
