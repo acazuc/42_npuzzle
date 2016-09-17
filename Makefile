@@ -6,7 +6,7 @@
 #    By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 06:50:12 by acazuc            #+#    #+#              #
-#    Updated: 2016/08/25 09:32:25 by acazuc           ###   ########.fr        #
+#    Updated: 2016/09/17 13:02:40 by acazuc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = npuzzle
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -Ofast -flto=8 -march=native
+CFLAGS = -Wall -Wextra -Werror -Ofast -flto -march=native
 
 INCLUDES_PATH = includes/
 
