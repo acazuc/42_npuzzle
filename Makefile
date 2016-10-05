@@ -6,7 +6,7 @@
 #    By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 06:50:12 by acazuc            #+#    #+#              #
-#    Updated: 2016/09/17 13:02:40 by acazuc           ###   ########.fr        #
+#    Updated: 2016/10/05 22:09:08 by acazuc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,11 @@ NAME = npuzzle
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -Ofast -flto -march=native
+CFLAGS = -Wall -Wextra -Werror -Ofast -flto -march=native -g
 
-INCLUDES_PATH = includes/
+INCLUDES_PATH = include/
 
-SRCS_PATH = srcs/
+SRCS_PATH = src/
 
 SRCS_NAME = main.c \
 			get_next_line.c \
@@ -45,21 +45,22 @@ SRCS_NAME = main.c \
 			state_list_size.c \
 			misplaced.c \
 			row_column.c \
+			state_calc_score.c \
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 
-OBJS_PATH = objs/
+OBJS_PATH = obj/
 
 OBJS_NAME = $(SRCS_NAME:.c=.o)
 
 OBJS = $(addprefix $(OBJS_PATH), $(OBJS_NAME))
 
-LIBRARY = -L libft/ -lft
+LIBRARY = -L libft -lft
 
 all: odir $(NAME)
 
 $(NAME): $(OBJS)
-	@make -C libft/
+	@make -C libft
 	@echo " - Making $(NAME)"
 	@$(CC) $(CFLAGS) -o $(NAME) $^ $(LIBRARY)
 
@@ -71,12 +72,12 @@ odir:
 	@mkdir -p $(OBJS_PATH)
 
 clean:
-	@make -C libft/ clean
+	@make -C libft clean
 	@echo " - Cleaning objs"
 	@rm -f $(OBJS)
 
 fclean: clean
-	@make -C libft/ fclean
+	@make -C libft fclean
 	@echo " - Cleaning executable"
 	@rm -f $(NAME)
 

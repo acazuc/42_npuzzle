@@ -6,6 +6,6 @@ void print_solution(t_env *env, t_state *state)
 	{
 		print_solution(env, state->pred);
 		dump_state(env, state);
-		ft_putchar('\n');
+		printf("\n");
 	}
 }

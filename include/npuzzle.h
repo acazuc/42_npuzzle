@@ -1,14 +1,13 @@
 #ifndef NPUZZLE_H
 # define NPUZZLE_H
 
-# include "../libft/includes/libft.h"
+# include "../libft/include/libft.h"
 # include <limits.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
-# include <sys/time.h>
-
 # include <stdio.h>
+# include <sys/time.h>
 
 typedef struct s_state_list t_state_list;
 typedef struct s_state t_state;
@@ -38,6 +37,7 @@ void print_solution(t_env *env, t_state *state);
 int state_list_size(t_state_list *lst);
 int misplaced(t_env *env, t_state *state);
 int row_column(t_env *env, t_state *state);
+void state_calc_score(t_env *env, t_state *state);
 
 struct s_env
 {
@@ -56,6 +56,7 @@ struct s_state_list
 struct s_state
 {
 	t_state *pred;
+	int score;
 	int **puzzle;
 	int g;
 	int h;

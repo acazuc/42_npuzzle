@@ -7,7 +7,7 @@ int main(int ac, char **av)
 	srand(epoch_millis());
 	if (ac < 3)
 	{
-		ft_putendl_fd("npuzzle: usage: npuzzle <--manhattan | --misplaced | --row_column> <puzzle file name>\nnpuzzle --random <--manhattan | --misplaced | --row_column> <size>", 2);
+		ft_putendl_fd("npuzzle: usage: npuzzle <--manhattan | --misplaced | --row_column> file\nnpuzzle <--manhattan | --misplaced | --row_column> --random size", 2);
 		exit(EXIT_FAILURE);
 	}
 	if (!ft_strcmp(av[1], "--manhattan"))
@@ -18,7 +18,7 @@ int main(int ac, char **av)
 		env.algo = 3;
 	else
 	{
-		ft_putendl_fd("npuzzle: invalid algorithm\nusage: npuzzle <--manhattan | --misplaced | --row_column> <puzzle file name>\nnpuzzle --random <--manhattan | --misplaced | --row_column> <size>", 2);
+		ft_putendl_fd("npuzzle: invalid algorithm\nusage: npuzzle <--manhattan | --misplaced | --row_column> file\nnpuzzle <--manhattan | --misplaced | --row_column> --random size>", 2);
 		exit(EXIT_FAILURE);
 	}
 	env.start = state_new();
@@ -26,7 +26,7 @@ int main(int ac, char **av)
 	{
 		if (ac < 3)
 		{
-			ft_putendl_fd("npuzzle: usage: npuzzle --random <--manhattan | --misplaced | --row_column> <size>", 2);
+			ft_putendl_fd("npuzzle: usage: npuzzle <--manhattan | --misplaced | --row_column> --random size", 2);
 			exit(EXIT_FAILURE);
 		}
 		char *tmp = av[3];
@@ -34,7 +34,7 @@ int main(int ac, char **av)
 			tmp++;
 		if (!ft_strisdigit(av[3]) || ft_strlen(tmp) > 3 || (env.size = ft_atoi(tmp)) > 255 || env.size < 2)
 		{
-			ft_putendl_fd("npuzzle: invalid size, must be integer between 2 and 255\nusage: npuzzle --random <--manhattan | --misplaced | --row_column> <size>", 2);
+			ft_putendl_fd("npuzzle: invalid size, must be integer between 2 and 255\nusage: npuzzle <--manhattan | --misplaced | --row_column> --random size", 2);
 			exit(EXIT_FAILURE);
 		}
 		generate_random(&env);
@@ -47,6 +47,8 @@ int main(int ac, char **av)
 	dump_state(&env, env.start);
 	env.end = state_new_size(&env);
 	build_end(&env);
+	state_calc_score(&env, env.end);
+	state_calc_score(&env, env.start);
 	ft_putendl("\nend:");
 	dump_state(&env, env.end);
 	ft_putchar('\n');
