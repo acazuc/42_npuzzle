@@ -4,6 +4,7 @@ int main(int ac, char **av)
 {
 	t_env env;
 
+	ft_bzero(&env, sizeof(env));
 	srand(epoch_millis());
 	if (ac < 3)
 	{
@@ -42,6 +43,11 @@ int main(int ac, char **av)
 	else
 	{
 		parse_file(&env, av[2]);
+		if (env.size < 2 || env.size > 255)
+		{
+			ft_putendl_fd("npuzzle: invalid size, must be integer between 2 and 255\nusage:\nnpuzzle <--manhattan | --misplaced | --row_column> --random size", 2);
+			exit(EXIT_FAILURE);
+		}
 	}
 	ft_putendl("start:");
 	dump_state(&env, env.start);
