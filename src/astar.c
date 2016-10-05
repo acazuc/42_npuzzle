@@ -17,11 +17,11 @@ void astar(t_env *env)
 	{
 		complexity_size = size_tmp;
 	}
-	while (opened && !success)
+	while (opened)
 	{
 		best_state = opened->state;
 		complexity_time++;
-		if (state_equals(env, best_state, env->end))
+		if (best_state->score == 0)
 		{
 			success = 1;
 			break;

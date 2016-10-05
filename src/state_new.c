@@ -11,6 +11,5 @@ t_state *state_new()
 	}
 	state->pred = NULL;
 	state->g = 0;
-	state->h = 0;
 	return (state);
 }

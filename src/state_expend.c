@@ -4,26 +4,18 @@ t_state_list *state_expend(t_env *env, t_state *state)
 {
 	t_state_list *lst = NULL;
 	t_state *new_tmp;
-	int y;
-	int x;
+	int y = 0;
+	int x = 0;
 
-	y = 0;
-	x = 0;
-	while (y < env->size)
+	for (y = 0; y < env->size; ++y)
 	{
-		x = 0;
-		while (x < env->size)
+		for (x = 0; x < env->size; ++x)
 		{
 			if (state->puzzle[y][x] == 0)
-			{
-				break;
-			}
-			x++;
+				goto expend;
 		}
-		if (x < env->size)
-			break;
-		y++;
 	}
+expend:
 	if (y != 0)
 	{
 		new_tmp = state_copy(env, state);
