@@ -10,7 +10,7 @@ int misplaced(t_env *env, t_state *state)
 		for (int x = 0; x < env->size; ++x)
 		{
 			if (state->puzzle[y][x] != 0 && state->puzzle[y][x] != env->end->puzzle[y][x])
-				total++;
+				++total;
 		}
 	}
 	return (total);

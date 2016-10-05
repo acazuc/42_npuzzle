@@ -10,21 +10,17 @@ t_state *state_new_size(t_env *env)
 		ft_putendl_fd("npuzzle: failed to malloc new state puzzle", 2);
 		exit(EXIT_FAILURE);
 	}
-	int i = 0;
-	while (i < env->size)
+	for (int i = 0; i < env->size; ++i)
 	{
 		if (!(state->puzzle[i] = malloc(sizeof(*state->puzzle[i]) * env->size)))
 		{
 			ft_putendl_fd("npuzzle: failed to malloc new state puzzle", 2);
 			exit(EXIT_FAILURE);
 		}
-		int j = 0;
-		while (j < env->size)
+		for (int j = 0; j < env->size; ++j)
 		{
 			state->puzzle[i][j] = 0;
-			j++;
 		}
-		i++;
 	}
 	return (state);
 }

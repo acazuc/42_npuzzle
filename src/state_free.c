@@ -2,13 +2,9 @@
 
 void state_free(t_env *env, t_state *state)
 {
-	int y;
-
-	y = 0;
-	while (y < env->size)
+	for (int y = 0; y < env->size; ++y)
 	{
 		free(state->puzzle[y]);
-		y++;
 	}
 	free(state->puzzle);
 	free(state);

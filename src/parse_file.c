@@ -24,28 +24,20 @@ static void alloc_puzzle(t_env *env)
 static int case_value_exists(t_env *env, int stmp, int i)
 {
 	int value;
-	int y;
-	int x;
 
 	value = env->start->puzzle[stmp][i];
-	y = 0;
-	while (y < stmp)
+	for (int y = 0; y < stmp; ++y)
 	{
-		x = 0;
-		while (x < env->size)
+		for (int x = 0; x < env->size; ++x)
 		{
 			if (env->start->puzzle[y][x] == value)
 				return (1);
-			x++;
 		}
-		y++;
 	}
-	x = 0;
-	while (x < i)
+	for (int x = 0; x < i; ++x)
 	{
 		if (env->start->puzzle[stmp][x] == value)
 			return (1);
-		x++;
 	}
 	return (0);
 }
