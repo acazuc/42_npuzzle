@@ -56,7 +56,7 @@ void generate_random(t_env *env)
 		i++;
 	}
 	i = 0;
-	while (i < env->size)
+	while (i < env->size * (1 + rand() / (float)RAND_MAX * 2))
 	{
 		shuffle(env, env->start->puzzle);
 		i++;
