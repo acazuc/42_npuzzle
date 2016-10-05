@@ -6,10 +6,7 @@ void dump_state(t_env *env, t_state *state)
 	{
 		for (int x = 0; x < env->size; ++x)
 		{
-			printf("%d", state->puzzle[y][x]);
-			if (x != env->size - 1)
-				printf(" ");
+			printf("%d%c", state->puzzle[y][x], x == env->size - 1 ? '\n' : ' ');
 		}
-		printf("\n");
 	}
 }

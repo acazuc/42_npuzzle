@@ -54,7 +54,9 @@ int main(int ac, char **av)
 	ft_putchar('\n');
 	if (is_solvable(&env))
 	{
+		long start = epoch_millis();
 		astar(&env);
+		printf("solve time: %ld ms\n", epoch_millis() - start);
 	}
 	else
 	{
