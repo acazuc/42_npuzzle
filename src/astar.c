@@ -35,17 +35,18 @@ void astar(t_env *env)
 		}
 		while (expend)
 		{
+			expend->state->g = best_state->g + 1;
 			if (!state_list_contains(env, opened, expend->state) && !state_list_contains(env, closed, expend->state))
 			{
 				state_list_push(&opened, expend->state);
 				expend->state->pred = best_state;
-				expend->state->g = best_state->g + 1;
+				expend->state->g = best_state->g + state_cost(best_state, expend->state);
 			}
 			else
 			{
-				if (expend->state->g + expend->state->score > best_state->g + expend->state->score)
+				if (expend->state->g > best_state->g + state_cost(best_state, expend->state))
 				{
-					expend->state->g = best_state->g + 1;
+					expend->state->g = best_state->g + state_cost(best_state, expend->state);
 					expend->state->pred = best_state;
 					if (state_list_contains(env, closed, expend->state))
 					{

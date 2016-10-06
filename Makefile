@@ -6,7 +6,7 @@
 #    By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 06:50:12 by acazuc            #+#    #+#              #
-#    Updated: 2016/10/05 22:09:08 by acazuc           ###   ########.fr        #
+#    Updated: 2016/10/06 16:59:57 by acazuc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRCS_NAME = main.c \
 			misplaced.c \
 			row_column.c \
 			state_calc_score.c \
+			state_cost.c \
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 
