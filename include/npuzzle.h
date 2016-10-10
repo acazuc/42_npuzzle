@@ -8,6 +8,9 @@
 # include <math.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <string.h>
+# include <ctype.h>
+# include <unistd.h>
 
 typedef struct s_state_list t_state_list;
 typedef struct s_state t_state;
@@ -46,6 +49,7 @@ int state_cost(t_state *old, t_state *new);
 void closed_tree_push(t_env *env, t_closed_tree *tree, t_state *state);
 t_state *closed_tree_get(t_env *env, t_closed_tree *tree, t_state *state);
 void closed_tree_remove(t_env *env, t_closed_tree *tree, t_state *state);
+int euclidian(t_env *env, t_state *s1, t_state *s2);
 
 # define UNIFORM_COST 0
 
@@ -59,6 +63,8 @@ struct s_env
 {
 	t_state *start;
 	t_state *end;
+	int uniform;
+	int greedy;
 	int size;
 	int algo;
 };

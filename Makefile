@@ -6,7 +6,7 @@
 #    By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 06:50:12 by acazuc            #+#    #+#              #
-#    Updated: 2016/10/10 02:19:47 by acazuc           ###   ########.fr        #
+#    Updated: 2016/10/10 19:40:41 by acazuc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRCS_NAME = main.c \
 			closed_tree_remove.c \
 			get_score.c \
 			epoch_millis.c \
+			euclidian.c \
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 

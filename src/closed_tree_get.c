@@ -6,7 +6,7 @@
 /*   By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/09 23:52:28 by acazuc            #+#    #+#             */
-/*   Updated: 2016/10/10 00:38:37 by acazuc           ###   ########.fr       */
+/*   Updated: 2016/10/10 19:01:06 by acazuc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_state	*closed_tree_get(t_env *env, t_closed_tree *tree, t_state *state)
 	lst = tree;
 	while (i < size)
 	{
-		lst = lst->childs[state->puzzle[i / 3][i % 3]];
+		lst = lst->childs[state->puzzle[i / env->size][i % env->size]];
 		if (!lst)
 		{
 			return (NULL);

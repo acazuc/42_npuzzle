@@ -1,63 +1,95 @@
 #include "npuzzle.h"
 
+static void print_usage()
+{
+	fprintf(stderr, "usage:");
+	fprintf(stderr, "npuzzle <--manhattan | --misplaced | --row_column | --euclidian> [-g | -u] file");
+	fprintf(stderr, "npuzzle <--manhattan | --misplaced | --row_column | --euclidian> [-g | -u] --random 3");
+}
+
 int main(int ac, char **av)
 {
 	t_env env;
+	int i = 1;
 
-	ft_bzero(&env, sizeof(env));
+	memset(&env, 0, sizeof(env));
 	srand(epoch_millis());
 	if (ac < 3)
 	{
-		ft_putendl_fd("npuzzle: usage:\nnpuzzle <--manhattan | --misplaced | --row_column> file\nnpuzzle <--manhattan | --misplaced | --row_column> --random size", 2);
+		print_usage();
 		exit(EXIT_FAILURE);
 	}
-	if (!ft_strcmp(av[1], "--manhattan"))
+	if (!strcmp(av[i], "--manhattan"))
 		env.algo = 1;
-	else if (!ft_strcmp(av[1], "--misplaced"))
+	else if (!strcmp(av[i], "--misplaced"))
 		env.algo = 2;
-	else if (!ft_strcmp(av[1], "--row_column"))
+	else if (!strcmp(av[i], "--row_column"))
 		env.algo = 3;
+	else if (!strcmp(av[i], "--euclidian"))
+		env.algo = 4;
 	else
 	{
-		ft_putendl_fd("npuzzle: invalid algorithm\nusage:\nnpuzzle <--manhattan | --misplaced | --row_column> file\nnpuzzle <--manhattan | --misplaced | --row_column> --random size>", 2);
+		print_usage();
 		exit(EXIT_FAILURE);
 	}
 	env.start = state_new();
-	if (!ft_strcmp(av[2], "--random"))
+	++i;
+	if (!strcmp(av[i], "-g"))
+	{
+		++i;
+		env.greedy = 1;
+	}
+	else if (!strcmp(av[i], "-u"))
+	{
+		++i;
+		env.uniform = 1;
+	}
+	if (!strcmp(av[i], "--random"))
 	{
 		if (ac < 3)
 		{
-			ft_putendl_fd("npuzzle: usage:\nnpuzzle <--manhattan | --misplaced | --row_column> --random size", 2);
+			print_usage();
 			exit(EXIT_FAILURE);
 		}
-		char *tmp = av[3];
+		++i;
+		char *tmp = av[i];
 		while (*tmp == '0')
 			tmp++;
-		if (!ft_strisdigit(av[3]) || ft_strlen(tmp) > 3 || (env.size = ft_atoi(tmp)) > 255 || env.size < 2)
+		int i = 0;
+		while (tmp[i])
+			if (!isdigit(tmp[i++]))
+			{
+				fprintf(stderr, "npuzzle: invalid size");
+				print_usage();
+				exit(EXIT_FAILURE);
+			}
+		if (strlen(tmp) > 3 || (env.size = atoi(tmp)) > 255 || env.size < 2)
 		{
-			ft_putendl_fd("npuzzle: invalid size, must be integer between 2 and 255\nusage:\nnpuzzle <--manhattan | --misplaced | --row_column> --random size", 2);
+			fprintf(stderr, "npuzzle: invalid size, must be integer between 2 and 255");
+			print_usage();
 			exit(EXIT_FAILURE);
 		}
 		generate_random(&env);
 	}
 	else
 	{
-		parse_file(&env, av[2]);
+		parse_file(&env, av[++i]);
 		if (env.size < 2 || env.size > 255)
 		{
-			ft_putendl_fd("npuzzle: invalid size, must be integer between 2 and 255\nusage:\nnpuzzle <--manhattan | --misplaced | --row_column> --random size", 2);
+			fprintf(stderr, "npuzzle: invalid size, must be integer between 2 and 255");
+			print_usage();
 			exit(EXIT_FAILURE);
 		}
 	}
-	ft_putendl("start:");
+	printf("start:");
 	dump_state(&env, env.start);
 	env.end = state_new_size(&env);
 	build_end(&env);
 	state_calc_score(&env, env.end);
 	state_calc_score(&env, env.start);
-	ft_putendl("\nend:");
+	printf("\nend:");
 	dump_state(&env, env.end);
-	ft_putchar('\n');
+	printf("\n");
 	if (is_solvable(&env))
 	{
 		long start = epoch_millis();
@@ -66,7 +98,7 @@ int main(int ac, char **av)
 	}
 	else
 	{
-		ft_putendl("This puzzle is not solvable");
+		printf("This puzzle is not solvable\n");
 	}
 	return (1);
 	(void)av;
