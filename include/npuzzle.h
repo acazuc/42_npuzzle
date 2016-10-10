@@ -78,7 +78,7 @@ struct s_state_list
 struct s_state
 {
 	t_state *pred;
-	int **puzzle;
+	unsigned short **puzzle;
 	int f;
 	int g;
 	int h;

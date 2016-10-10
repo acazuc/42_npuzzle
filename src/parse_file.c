@@ -68,7 +68,7 @@ static void fill_line(t_env *env, char *line, int stmp)
 			exit(EXIT_FAILURE);
 		}
 		env->start->puzzle[stmp][i] = ft_atoi(splitted[i]);
-		if (env->start->puzzle[stmp][i] < 0 || env->start->puzzle[stmp][i] > env->size * env->size - 1)
+		if (/*env->start->puzzle[stmp][i] < 0 || */env->start->puzzle[stmp][i] > env->size * env->size - 1)
 		{
 			ft_putendl_fd("npuzzle: invalid case value", 2);
 			exit(EXIT_FAILURE);

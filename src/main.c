@@ -81,13 +81,13 @@ int main(int ac, char **av)
 			exit(EXIT_FAILURE);
 		}
 	}
-	printf("start:");
+	printf("start:\n");
 	dump_state(&env, env.start);
 	env.end = state_new_size(&env);
 	build_end(&env);
 	state_calc_score(&env, env.end);
 	state_calc_score(&env, env.start);
-	printf("\nend:");
+	printf("\nend:\n");
 	dump_state(&env, env.end);
 	printf("\n");
 	if (is_solvable(&env))
