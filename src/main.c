@@ -2,9 +2,9 @@
 
 static void print_usage()
 {
-	fprintf(stderr, "usage:");
-	fprintf(stderr, "npuzzle <--manhattan | --misplaced | --row_column | --euclidian> [-g | -u] file");
-	fprintf(stderr, "npuzzle <--manhattan | --misplaced | --row_column | --euclidian> [-g | -u] --random 3");
+	fprintf(stderr, "usage:\n");
+	fprintf(stderr, "npuzzle <--manhattan | --misplaced | --row_column | --euclidian> [-g | -u] file\n");
+	fprintf(stderr, "npuzzle <--manhattan | --misplaced | --row_column | --euclidian> [-g | -u] --random 3\n");
 }
 
 int main(int ac, char **av)
@@ -55,17 +55,17 @@ int main(int ac, char **av)
 		char *tmp = av[i];
 		while (*tmp == '0')
 			tmp++;
-		int i = 0;
-		while (tmp[i])
-			if (!isdigit(tmp[i++]))
+		int k = 0;
+		while (tmp[k])
+			if (!isdigit(tmp[k++]))
 			{
-				fprintf(stderr, "npuzzle: invalid size");
+				fprintf(stderr, "npuzzle: invalid size\n");
 				print_usage();
 				exit(EXIT_FAILURE);
 			}
 		if (strlen(tmp) > 3 || (env.size = atoi(tmp)) > 255 || env.size < 2)
 		{
-			fprintf(stderr, "npuzzle: invalid size, must be integer between 2 and 255");
+			fprintf(stderr, "npuzzle: invalid size, must be integer between 2 and 255\n");
 			print_usage();
 			exit(EXIT_FAILURE);
 		}
@@ -76,10 +76,16 @@ int main(int ac, char **av)
 		parse_file(&env, av[++i]);
 		if (env.size < 2 || env.size > 255)
 		{
-			fprintf(stderr, "npuzzle: invalid size, must be integer between 2 and 255");
+			fprintf(stderr, "npuzzle: invalid size, must be integer between 2 and 255\n");
 			print_usage();
 			exit(EXIT_FAILURE);
 		}
+	}
+	if (av[++i])
+	{
+		fprintf(stderr, "npuzzle: too much parameters\n");
+		print_usage();
+		exit(EXIT_FAILURE);
 	}
 	printf("start:\n");
 	dump_state(&env, env.start);
