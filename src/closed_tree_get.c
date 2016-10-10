@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   epoch_millis.c                                     :+:      :+:    :+:   */
+/*   closed_tree_get.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/08 12:59:25 by acazuc            #+#    #+#             */
-/*   Updated: 2016/10/10 02:32:56 by acazuc           ###   ########.fr       */
+/*   Created: 2016/10/09 23:52:28 by acazuc            #+#    #+#             */
+/*   Updated: 2016/10/10 00:38:37 by acazuc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "npuzzle.h"
 
-long	epoch_millis(void)
+t_state	*closed_tree_get(t_env *env, t_closed_tree *tree, t_state *state)
 {
-	struct timeval		time;
+	t_closed_tree *lst;
+	int size = env->size * env->size;
+	int i = 0;
 
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+	lst = tree;
+	while (i < size)
+	{
+		lst = lst->childs[state->puzzle[i / 3][i % 3]];
+		if (!lst)
+		{
+			return (NULL);
+		}
+		++i;
+	}
+	return (lst->state);
 }

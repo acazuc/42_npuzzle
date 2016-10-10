@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   epoch_millis.c                                     :+:      :+:    :+:   */
+/*   closed_tree_remove.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/08 12:59:25 by acazuc            #+#    #+#             */
-/*   Updated: 2016/10/10 02:32:56 by acazuc           ###   ########.fr       */
+/*   Created: 2016/10/10 00:01:23 by acazuc            #+#    #+#             */
+/*   Updated: 2016/10/10 00:48:28 by acazuc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "npuzzle.h"
 
-long	epoch_millis(void)
+void	closed_tree_remove(t_env *env, t_closed_tree *tree, t_state *state)
 {
-	struct timeval		time;
+	t_closed_tree *lst;
+	int size = env->size * env->size;
+	int i = 0;
 
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+	lst = tree;
+	while (i < size)
+	{
+		lst = lst->childs[state->puzzle[i / 3][i % 3]];
+		if (!lst)
+		{
+			ft_putendl("FAILED OMG");
+			exit(EXIT_FAILURE);
+			return ;
+		}
+		++i;
+	}
+	lst->state = NULL;
 }

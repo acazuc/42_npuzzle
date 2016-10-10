@@ -12,6 +12,6 @@ t_state *state_copy(t_env *env, t_state *from)
 			state->puzzle[y][x] = from->puzzle[y][x];
 		}
 	}
-	state->score = from->score;
+	state->h = from->h;
 	return (state);
 }

@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   epoch_millis.c                                     :+:      :+:    :+:   */
+/*   state_list_get.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/08 12:59:25 by acazuc            #+#    #+#             */
-/*   Updated: 2016/10/10 02:32:56 by acazuc           ###   ########.fr       */
+/*   Created: 2016/10/10 01:38:37 by acazuc            #+#    #+#             */
+/*   Updated: 2016/10/10 01:39:01 by acazuc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "npuzzle.h"
 
-long	epoch_millis(void)
+t_state_list *state_list_get(t_env *env, t_state_list *lst, t_state *state)
 {
-	struct timeval		time;
+	t_state_list *tmp;
 
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+	tmp = lst;
+	while (tmp)
+	{
+		if (state_equals(env, tmp->state, state))
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
 }
+

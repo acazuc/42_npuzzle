@@ -2,18 +2,30 @@
 
 void astar(t_env *env)
 {
+	t_closed_tree closed;
 	t_state_list *opened = NULL;
-	t_state_list *closed = NULL;
 	t_state *best_state;
 	t_state_list *expend;
 	t_state_list *tmp;
+	t_state_list *tmp_nei;
+	int in_closed;
 	int complexity_time = 0;
 	int complexity_size = 0;
 	int success = 0;
 	int size_tmp;
+	int opened_size = 0;
+	int closed_size = 0;
+	int tmpg;
 
+	ft_bzero(&closed, sizeof(closed));
+	if (!(closed.childs = malloc(sizeof(*closed.childs) * env->size * env->size)))
+	{
+		ft_putendl_fd("nuzzle: malloc failed", 2);
+		exit(EXIT_FAILURE);
+	}
+	ft_bzero(closed.childs, sizeof(*closed.childs) * env->size * env->size);
 	state_list_push(&opened, env->start);
-	if ((size_tmp = state_list_size(opened) + state_list_size(closed)) > complexity_size)
+	if ((size_tmp = opened_size + closed_size) > complexity_size)
 	{
 		complexity_size = size_tmp;
 	}
@@ -21,43 +33,52 @@ void astar(t_env *env)
 	{
 		best_state = opened->state;
 		complexity_time++;
-		if (best_state->score == 0)
+		if (best_state->h == 0)
 		{
 			success = 1;
 			break;
 		}
 		state_list_remove(&opened, best_state);
-		state_list_push(&closed, best_state);
+		opened_size--;
+		closed_tree_push(env, &closed, best_state);
+		closed_size++;
 		expend = state_expend(env, best_state);
-		if ((size_tmp = state_list_size(opened) + state_list_size(closed) + state_list_size(expend)) > complexity_size)
+		if ((size_tmp = opened_size + closed_size + state_list_size(expend)) > complexity_size)
 		{
 			complexity_size = size_tmp;
 		}
 		while (expend)
 		{
-			expend->state->g = best_state->g + 1;
-			if (!state_list_contains(env, opened, expend->state) && !state_list_contains(env, closed, expend->state))
+			in_closed = closed_tree_get(env, &closed, expend->state) != NULL;
+			if (in_closed)
 			{
-				state_list_push(&opened, expend->state);
+				tmp = expend;
+				expend = expend->next;
+				free(tmp);
+				continue;
+			}
+			tmpg = best_state->g + manhattan(env, expend->state, best_state);
+			tmp_nei = state_list_get(env, opened, expend->state);
+			if (!tmp_nei)
+			{
 				expend->state->pred = best_state;
-				expend->state->g = best_state->g + state_cost(best_state, expend->state);
+				expend->state->g = tmpg;
+				expend->state->f = expend->state->g + expend->state->h;
+				state_list_push(&opened, expend->state);
+				opened_size++;
+			}
+			else if (tmpg >= tmp_nei->state->g)
+			{
+				tmp = expend;
+				expend = expend->next;
+				free(tmp);
+				continue;
 			}
 			else
 			{
-				if (expend->state->g > best_state->g + state_cost(best_state, expend->state))
-				{
-					expend->state->g = best_state->g + state_cost(best_state, expend->state);
-					expend->state->pred = best_state;
-					if (state_list_contains(env, closed, expend->state))
-					{
-						state_list_remove(&closed, expend->state);
-						state_list_push(&opened, expend->state);
-					}
-					else if (!state_list_contains(env, opened, expend->state))
-					{
-						free(expend->state);
-					}
-				}
+				tmp_nei->state->pred = best_state;
+				tmp_nei->state->g = tmpg;
+				tmp_nei->state->f = tmp_nei->state->g + tmp_nei->state->h;
 			}
 			tmp = expend;
 			expend = expend->next;

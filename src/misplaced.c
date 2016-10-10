@@ -1,6 +1,6 @@
 #include "npuzzle.h"
 
-int misplaced(t_env *env, t_state *state)
+int misplaced(t_env *env, t_state *s1, t_state *s2)
 {
 	int total;
 
@@ -9,7 +9,7 @@ int misplaced(t_env *env, t_state *state)
 	{
 		for (int x = 0; x < env->size; ++x)
 		{
-			if (state->puzzle[y][x] != 0 && state->puzzle[y][x] != env->end->puzzle[y][x])
+			if (s1->puzzle[y][x] != 0 && s1->puzzle[y][x] != s2->puzzle[y][x])
 				++total;
 		}
 	}

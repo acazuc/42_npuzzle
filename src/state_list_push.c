@@ -24,7 +24,7 @@ static void push(t_state_list **list, t_state_list *state)
 	lst = *list;
 	while (lst)
 	{
-		if (state->state->score <= lst->state->score)
+		if (state->state->f <= lst->state->f)
 		{
 			insert(list, lst, prv, state);
 			return;

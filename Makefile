@@ -6,7 +6,7 @@
 #    By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 06:50:12 by acazuc            #+#    #+#              #
-#    Updated: 2016/10/06 16:59:57 by acazuc           ###   ########.fr        #
+#    Updated: 2016/10/10 02:19:47 by acazuc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS_NAME = main.c \
 			state_list_contains.c \
 			state_list_free.c \
 			state_free.c \
+			state_list_get.c \
 			state_expend.c \
 			state_copy.c \
 			manhattan.c \
@@ -47,6 +48,11 @@ SRCS_NAME = main.c \
 			row_column.c \
 			state_calc_score.c \
 			state_cost.c \
+			closed_tree_push.c \
+			closed_tree_get.c \
+			closed_tree_remove.c \
+			get_score.c \
+			epoch_millis.c \
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 

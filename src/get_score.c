@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   epoch_millis.c                                     :+:      :+:    :+:   */
+/*   get_score.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/08 12:59:25 by acazuc            #+#    #+#             */
-/*   Updated: 2016/10/10 02:32:56 by acazuc           ###   ########.fr       */
+/*   Created: 2016/10/10 01:17:06 by acazuc            #+#    #+#             */
+/*   Updated: 2016/10/10 01:22:37 by acazuc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "npuzzle.h"
 
-long	epoch_millis(void)
+int	get_score(t_env *env, t_state *s1, t_state *s2)
 {
-	struct timeval		time;
-
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+	if (env->algo == 1)
+		return (manhattan(env, s1, s2));
+	else if (env->algo == 2)
+		return (misplaced(env, s1, s2));
+	return (row_column(env, s1, s2));
 }
