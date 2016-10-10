@@ -3,11 +3,12 @@
 void astar(t_env *env)
 {
 	t_closed_tree closed;
+	t_closed_tree opened_tree;
 	t_state_list *opened = NULL;
 	t_state *best_state;
 	t_state_list *expend;
 	t_state_list *tmp;
-	t_state_list *tmp_nei;
+	t_state *tmp_nei;
 	int in_closed;
 	int complexity_time = 0;
 	int complexity_size = 0;
@@ -24,7 +25,15 @@ void astar(t_env *env)
 		exit(EXIT_FAILURE);
 	}
 	ft_bzero(closed.childs, sizeof(*closed.childs) * env->size * env->size);
+	ft_bzero(&opened_tree, sizeof(opened_tree));
+	if (!(opened_tree.childs = malloc(sizeof(*opened_tree.childs) * env->size * env->size)))
+	{
+		ft_putendl_fd("npuzzle: malloc failed", 2);
+		exit(EXIT_FAILURE);
+	}
+	ft_bzero(opened_tree.childs, sizeof(*opened_tree.childs) * env->size *env->size);
 	state_list_push(&opened, env->start);
+	closed_tree_push(env, &opened_tree, env->start);
 	if ((size_tmp = opened_size + closed_size) > complexity_size)
 	{
 		complexity_size = size_tmp;
@@ -38,8 +47,11 @@ void astar(t_env *env)
 			success = 1;
 			break;
 		}
-		state_list_remove(&opened, best_state);
+		tmp = opened;
+		opened = opened->next;
+		free(tmp);
 		opened_size--;
+		closed_tree_remove(env, &opened_tree, best_state);
 		closed_tree_push(env, &closed, best_state);
 		closed_size++;
 		expend = state_expend(env, best_state);
@@ -57,17 +69,18 @@ void astar(t_env *env)
 				free(tmp);
 				continue;
 			}
-			tmpg = best_state->g + manhattan(env, expend->state, best_state);
-			tmp_nei = state_list_get(env, opened, expend->state);
+			tmpg = best_state->g + 1;
+			tmp_nei = closed_tree_get(env, &opened_tree, expend->state);
 			if (!tmp_nei)
 			{
 				expend->state->pred = best_state;
 				expend->state->g = tmpg;
 				expend->state->f = expend->state->g + expend->state->h;
 				state_list_push(&opened, expend->state);
+				closed_tree_push(env, &opened_tree, expend->state);
 				opened_size++;
 			}
-			else if (tmpg >= tmp_nei->state->g)
+			else if (tmpg >= tmp_nei->g)
 			{
 				tmp = expend;
 				expend = expend->next;
@@ -76,9 +89,9 @@ void astar(t_env *env)
 			}
 			else
 			{
-				tmp_nei->state->pred = best_state;
-				tmp_nei->state->g = tmpg;
-				tmp_nei->state->f = tmp_nei->state->g + tmp_nei->state->h;
+				tmp_nei->pred = best_state;
+				tmp_nei->g = tmpg;
+				tmp_nei->f = tmp_nei->g + tmp_nei->h;
 			}
 			tmp = expend;
 			expend = expend->next;
