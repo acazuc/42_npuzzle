@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   closed_tree_push.c                                 :+:      :+:    :+:   */
+/*   state_tree_push.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/09 23:45:35 by acazuc            #+#    #+#             */
-/*   Updated: 2016/10/10 19:39:50 by acazuc           ###   ########.fr       */
+/*   Updated: 2016/10/12 11:24:01 by acazuc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "npuzzle.h"
 
-void	closed_tree_push(t_env *env, t_closed_tree *tree, t_state *state)
+void	state_tree_push(t_env *env, t_state_tree *tree, t_state *state, int opened)
 {
-	t_closed_tree *lst;
-	t_closed_tree *new;
+	t_state_tree *lst;
+	t_state_tree *new;
 	int size = env->size * env->size;
 	int i;
 
@@ -36,6 +36,7 @@ void	closed_tree_push(t_env *env, t_closed_tree *tree, t_state *state)
 			exit(EXIT_FAILURE);
 		}
 		memset(new, 0, sizeof(*new));
+		new->opened = opened;
 		if (!(new->childs = malloc(sizeof(*new->childs) * size)))
 		{
 			ft_putendl_fd("npuzzle: malloc failed", 2);

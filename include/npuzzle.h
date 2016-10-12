@@ -15,7 +15,7 @@
 typedef struct s_state_list t_state_list;
 typedef struct s_state t_state;
 typedef struct s_env t_env;
-typedef struct s_closed_tree t_closed_tree;
+typedef struct s_state_tree t_state_tree;
 
 long epoch_millis(void);
 char *get_next_line(int fd);
@@ -46,17 +46,18 @@ int row_column(t_env *env, t_state *s1, t_state *s2);
 int get_score(t_env *env, t_state *s1, t_state *s2);
 void state_calc_score(t_env *env, t_state *state);
 int state_cost(t_state *old, t_state *new);
-void closed_tree_push(t_env *env, t_closed_tree *tree, t_state *state);
-t_state *closed_tree_get(t_env *env, t_closed_tree *tree, t_state *state);
-void closed_tree_remove(t_env *env, t_closed_tree *tree, t_state *state);
+void state_tree_push(t_env *env, t_state_tree *tree, t_state *state, int opened);
+t_state *state_tree_get(t_env *env, t_state_tree *tree, t_state *state, int *is_closed);
+void state_tree_set(t_env *env, t_state_tree *tree, t_state *state, int opened);
 int euclidian(t_env *env, t_state *s1, t_state *s2);
 
 # define UNIFORM_COST 0
 
-struct s_closed_tree
+struct s_state_tree
 {
 	t_state *state;
-	t_closed_tree **childs;
+	int opened;
+	t_state_tree **childs;
 };
 
 struct s_env

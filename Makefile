@@ -6,7 +6,7 @@
 #    By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 06:50:12 by acazuc            #+#    #+#              #
-#    Updated: 2016/10/10 19:40:41 by acazuc           ###   ########.fr        #
+#    Updated: 2016/10/12 11:24:14 by acazuc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,9 +48,9 @@ SRCS_NAME = main.c \
 			row_column.c \
 			state_calc_score.c \
 			state_cost.c \
-			closed_tree_push.c \
-			closed_tree_get.c \
-			closed_tree_remove.c \
+			state_tree_push.c \
+			state_tree_get.c \
+			state_tree_set.c \
 			get_score.c \
 			epoch_millis.c \
 			euclidian.c \

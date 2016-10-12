@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   closed_tree_remove.c                               :+:      :+:    :+:   */
+/*   state_tree_get.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acazuc <acazuc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/10 00:01:23 by acazuc            #+#    #+#             */
-/*   Updated: 2016/10/10 19:01:19 by acazuc           ###   ########.fr       */
+/*   Created: 2016/10/09 23:52:28 by acazuc            #+#    #+#             */
+/*   Updated: 2016/10/12 11:24:42 by acazuc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "npuzzle.h"
 
-void	closed_tree_remove(t_env *env, t_closed_tree *tree, t_state *state)
+t_state	*state_tree_get(t_env *env, t_state_tree *tree, t_state *state, int *is_closed)
 {
-	t_closed_tree *lst;
+	t_state_tree *lst;
 	int size = env->size * env->size;
 	int i = 0;
 
@@ -24,11 +24,11 @@ void	closed_tree_remove(t_env *env, t_closed_tree *tree, t_state *state)
 		lst = lst->childs[state->puzzle[i / env->size][i % env->size]];
 		if (!lst)
 		{
-			ft_putendl("FAILED OMG");
-			exit(EXIT_FAILURE);
-			return ;
+			return (NULL);
 		}
 		++i;
 	}
-	lst->state = NULL;
+	if (is_closed)
+		*is_closed = !lst->opened;
+	return (lst->state);
 }
