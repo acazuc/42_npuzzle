@@ -50,8 +50,7 @@ void state_tree_push(t_env *env, t_state_tree *tree, t_state *state, int opened)
 t_state *state_tree_get(t_env *env, t_state_tree *tree, t_state *state, int *is_closed);
 void state_tree_set(t_env *env, t_state_tree *tree, t_state *state, int opened);
 int euclidian(t_env *env, t_state *s1, t_state *s2);
-
-# define UNIFORM_COST 0
+void state_tree_free(t_env *env, t_state_tree *node);
 
 struct s_state_tree
 {

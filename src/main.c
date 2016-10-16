@@ -106,6 +106,6 @@ int main(int ac, char **av)
 	{
 		printf("This puzzle is not solvable\n");
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 	(void)av;
 }
